@@ -40,13 +40,11 @@ using Microsoft.Extensions.Logging;
 using Sidekick.Common.Initialization;
 
 public class MyService(
-    // ISettingsService settingsService,
-    // IBulkTradeService bulkTradeService,
     IItemParser itemParser,
     ITradeFilterService tradeFilterService,
     ITradeSearchService tradeSearchService)
 {
-    public async Task<List<TradeItem>> gogogo(string itemText) 
+    public async Task<List<TradeItem>> Gogogo(string itemText) 
     {
         var item = await itemParser.ParseItemAsync(itemText);
 
@@ -70,7 +68,7 @@ public class MyService(
                   .ToList();
         if (ids?.Count == 0)
         {
-            return new List<TradeItem>();
+            return [];
         }
 
         if (itemTradeResult.Id != null && ids != null)
@@ -78,24 +76,16 @@ public class MyService(
             var result = await tradeSearchService.GetResults(item.Header.Game, itemTradeResult.Id, ids, pseudoFilters);
             tradeItems?.AddRange(result);
         }
-        return tradeItems ?? new List<TradeItem>();
+        return tradeItems ?? [];
     }
 
 }
-
-// An exception of type 'System.InvalidOperationException' occurred in 
-// Microsoft.Extensions.DependencyInjection.dll but was not handled in user code: 
-// 'Unable to resolve service for type 
-// 'Microsoft.Extensions.Localization.IStringLocalizer`
-// 1[Sidekick.Apis.Poe.Parser.Properties.Filters.FilterResources]' 
-// while attempting to activate 'Sidekick.Apis.Poe.Parser.Properties.PropertyParser'.'
 
 class Program
 {
     static async Task Main(string[] args)
     {
         var host = CreateHostBuilder(args).Build();
-        Console.WriteLine("hello world");
         
         var settingsService = host.Services.GetRequiredService<ISettingsService>();
         await settingsService.Set(SettingKeys.LanguageParser, "en");
@@ -103,14 +93,9 @@ class Program
         await settingsService.Set(SettingKeys.LeagueId, "poe2.Standard");
 
         var serviceProvider = host.Services.GetRequiredService<IServiceProvider>();
-        await Initialize(serviceProvider);;
-
-        // host.Services.GetRequiredService<IItemParser>();
-        // host.Services.GetRequiredService<IPropertyParser>();
+        await Initialize(serviceProvider);
 
         var service = new MyService(
-            // host.Services.GetRequiredService<ISettingsService>(),
-            // host.Services.GetRequiredService<IBulkTradeService>(),
             host.Services.GetRequiredService<IItemParser>(),
             host.Services.GetRequiredService<ITradeFilterService>(),
             host.Services.GetRequiredService<ITradeSearchService>()
@@ -138,13 +123,12 @@ Adds 15 to 34 Fire damage to Attacks
 +12 to Intelligence
 +17% to Chaos Resistance
 ";
-        var results = await service.gogogo(item);
+        var results = await service.Gogogo(item);
 
         foreach (var result in results)
         {
             Console.WriteLine($"Item: {result}");
         }
-        // No need to call host.Run() if you don't need to keep the application running
     }
 
     private static async Task Initialize(IServiceProvider serviceProvider)
@@ -169,25 +153,13 @@ Adds 15 to 34 Fire damage to Attacks
             .ConfigureServices((context, services) =>
             {
                 services.AddLocalization();
-                    // .AddRazorPages();
-                    // .AddServerSideBlazor();
-                    // .AddHttpClient();
-                    // .AddLocalization();
-
                 services
-
                     // Common
                     .AddSidekickCommon()
                     // .AddSidekickCommonBlazor()
                     .AddSidekickCommonDatabase(SidekickPaths.DatabasePath)
                     // .AddSidekickCommonUi()
                     // .AddSingleton<IInterprocessService, InterprocessService>()
-
-                    // .AddSidekickCommonPlatform(o =>
-                    // {
-                    //     o.WindowsIconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot/favicon.ico");
-                    //     o.OsxIconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "wwwroot/apple-touch-icon.png");
-                    // })
 
                     // Apis
                     // .AddSidekickGitHubApi()
