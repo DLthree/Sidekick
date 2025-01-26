@@ -72,6 +72,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Common.Ui", "src\S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sidekick.Common.Updater", "src\Sidekick.Common.Updater\Sidekick.Common.Updater.csproj", "{2F2F03B3-213A-40D7-B818-8E618DDF01AF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMHypothesis", "src\EMHypothesis\EMHypothesis.csproj", "{889C72CB-C9F6-4691-A616-071175E29CB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -166,6 +168,10 @@ Global
 		{2F2F03B3-213A-40D7-B818-8E618DDF01AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F2F03B3-213A-40D7-B818-8E618DDF01AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F2F03B3-213A-40D7-B818-8E618DDF01AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{889C72CB-C9F6-4691-A616-071175E29CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{889C72CB-C9F6-4691-A616-071175E29CB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{889C72CB-C9F6-4691-A616-071175E29CB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{889C72CB-C9F6-4691-A616-071175E29CB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
