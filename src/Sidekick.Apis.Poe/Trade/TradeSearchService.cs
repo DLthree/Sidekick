@@ -141,13 +141,16 @@ public class TradeSearchService
             var json = JsonSerializer.Serialize(new QueryRequest() { Query = query, }, poeTradeClient.Options);
 
             var body = new StringContent(json, Encoding.UTF8, "application/json");
+            logger.LogInformation($"*** [Trade API] Querying Trade API with {uri} {json}");
             var response = await poeTradeClient.HttpClient.PostAsync(uri, body);
 
-            var content = await response.Content.ReadAsStreamAsync();
-            var result = await JsonSerializer.DeserializeAsync<TradeSearchResult<string>?>(content, poeTradeClient.Options);
+            var content = await response.Content.ReadAsStringAsync(); // Read the response content as a string
+            logger.LogInformation($"*** [Trade API] Response content: {content}"); // Log the response content
+
+            var result = JsonSerializer.Deserialize<TradeSearchResult<string>?>(content, poeTradeClient.Options);
             if (result != null)
             {
-                return result;
+                   return result;
             }
         }
         catch (SidekickException)
